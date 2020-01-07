@@ -5,13 +5,14 @@ import './FormBookings.css'
 
 let booking = {
     personId: "",
-    personName:"",
+    personName: "",
     roomId: "",
-    roomNumber:"",
+    roomNumber: "",
     bookedAt: "",
 }
 const FormBookings = ({ getBookings, createBooking, formData, getVisitors, getRooms, visitorsData, roomsData }) => {
     const [newBooking, setNewBooking] = useState(booking)
+    const [showError,setShowError] = useState("none")
     useEffect(() => {
         getVisitors()
         getRooms()
@@ -26,32 +27,38 @@ const FormBookings = ({ getBookings, createBooking, formData, getVisitors, getRo
     }, [formData])
 
     const handleSubmit = () => {
-        createBooking(newBooking)
-        setTimeout(()=>getBookings(),0)
-        setNewBooking(booking)
+        if(newBooking.personName && newBooking.roomId && newBooking.bookedAt){
+            createBooking(newBooking)
+            setTimeout(() => getBookings(), 0)
+            setNewBooking(booking)
+            setShowError("none")
+        }else{
+            setShowError("block")
+        }
+        
     }
-    const handleInputChange = (event,data) => {
-        const { target: { name, value} } = event; 
-        if(name ==="personId"){
-            let person = visitorsData.find(p=>p.personId===value).personName 
+    const handleInputChange = (event, data) => {
+        const { target: { name, value } } = event;
+        if (name === "personId") {
+            let person = visitorsData.find(p => p.personId === value).personName
             setNewBooking({
                 ...newBooking,
-                [name]:value,
-                "personName":person         
+                [name]: value,
+                "personName": person
             })
         }
-        else if(name==="roomId"){
-            let room = roomsData.find(r=>r.id===value).roomId
+        else if (name === "roomId") {
+            let room = roomsData.find(r => r.id === value).roomId
             setNewBooking({
                 ...newBooking,
-                [name]:value,
-                "roomNumber":room         
+                [name]: value,
+                "roomNumber": room
             })
         }
-        else{
+        else {
             setNewBooking({
                 ...newBooking,
-                [name]:value, 
+                [name]: value,
             })
         }
     }
@@ -61,16 +68,16 @@ const FormBookings = ({ getBookings, createBooking, formData, getVisitors, getRo
                 <h3>New Booking</h3>
                 <label>
                     <span>Person Name</span>
-                    <select name='personId' value={newBooking.personId}  onChange={(data)=>handleInputChange(data)} >
+                    <select name='personId' value={newBooking.personId} onChange={(data) => handleInputChange(data)} >
                         <option hidden defaultValue>Select</option>
                         {visitorsData.map((i) => {
-                        return <option value={i.personId} data={i}  key={i.id}>{i.personName}</option>
+                            return <option value={i.personId} data={i} key={i.id}>{i.personName}</option>
                         })}
                     </select>
                 </label>
                 <label>
                     <span>Person ID</span>
-                    <input disabled type="text" onChange={handleInputChange}  value={newBooking.personId} name='personId' id="personId"></input>
+                    <input disabled type="text" onChange={handleInputChange} value={newBooking.personId} name='personId' id="personId"></input>
                 </label>
                 <label>
                     <span>Room Number</span>
@@ -86,6 +93,14 @@ const FormBookings = ({ getBookings, createBooking, formData, getVisitors, getRo
                     <input type="date" onChange={handleInputChange} value={newBooking.bookedAt} name='bookedAt' id="bookedAt"></input>
                 </label>
             </div>
+
+            <div id="myModal" style={{ display: `${showError}`, color: "red" }} class="modal">
+                <div class="modal-content">
+                    <span class="close"></span>
+                    <h3>Please fill all fields...</h3>
+                </div>
+            </div>
+
             <div>
                 <button onClick={handleSubmit} className="formButton" >{newBooking.id ? "Update" : "Create"}</button>
             </div>

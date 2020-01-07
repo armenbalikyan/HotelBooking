@@ -11,6 +11,8 @@ let form = {
 }
 const FormRooms = ({ createRoom, getRooms, getStatus, formData }) => {
   const [newRoom, setNewRoom] = useState(form)
+  const [showError, setShowError] = useState("none");
+
   useEffect(() => {
     setNewRoom({
       ...form,
@@ -28,13 +30,22 @@ const FormRooms = ({ createRoom, getRooms, getStatus, formData }) => {
   }
 
   const handleSubmit = () => {
-    createRoom(newRoom)
-    setTimeout(()=>{getRooms()
-    getStatus()},0);
-    setNewRoom({ ...form })
+    if (newRoom.beds && newRoom.floor && newRoom.roomId) {
+      createRoom(newRoom)
+      setTimeout(() => {
+        getRooms()
+        getStatus()
+      }, 0);
+      setNewRoom({ ...form })
+      setShowError("none")
+    }else{
+      setShowError("block")
+    }
+
   }
 
   return (
+
     <div className='form'>
       <div>
         <h3>Add New Room</h3>
@@ -55,6 +66,14 @@ const FormRooms = ({ createRoom, getRooms, getStatus, formData }) => {
           <input type="number" onChange={handleInputChange} value={newRoom.roomId} name='roomId' id="roomId"></input>
         </label>
       </div>
+
+      <div id="myModal" style={{display:`${showError}`,color:"red"}} class="modal">
+        <div class="modal-content">
+          <span class="close"></span>
+          <h3>Please fill all fields...</h3>
+        </div>
+      </div>
+
       <div>
         <button className="formButton" onClick={handleSubmit}>{newRoom.id ? "Update" : "Create"}</button>
       </div>

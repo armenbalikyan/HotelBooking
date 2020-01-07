@@ -1,6 +1,6 @@
-import React,{useState,memo,useEffect} from 'react';
-import {getVisitorsThunk,createVisitorThunk} from '../../../Thunks'
-import {connect} from 'react-redux';
+import React, { useState, memo, useEffect } from 'react';
+import { getVisitorsThunk, createVisitorThunk } from '../../../Thunks'
+import { connect } from 'react-redux';
 import './FormVisitor.css'
 
 let person = {
@@ -9,24 +9,34 @@ let person = {
     cardNumber: "",
     createdDate: "",
 }
-const FormVisitors = ({getVisitors,createVisitor,formData}) => {
-    const [newVisitor,setNewVisitor]= useState(person)
+const FormVisitors = ({ getVisitors, createVisitor, formData }) => {
+    const [newVisitor, setNewVisitor] = useState(person)
+    const [showError, setShowError] = useState("none");
+
     useEffect(() => {
-        setNewVisitor({...person,
-          ...formData})
+        setNewVisitor({
+            ...person,
+            ...formData
+        })
     }, [formData])
 
 
-    const handleSubmit=()=>{
-        createVisitor(newVisitor)
-        setTimeout(()=>getVisitors(),0)
-        setNewVisitor(person)
+    const handleSubmit = () => {
+        if (newVisitor.personName && newVisitor.personId && newVisitor.cardNumber && newVisitor.createdDate) {
+            createVisitor(newVisitor)
+            setTimeout(() => getVisitors(), 0)
+            setNewVisitor(person)
+            setShowError("none")
+        } else {
+            setShowError("block")
+        }
+
     }
     const handleInputChange = (event) => {
         const { target: { name, value } } = event;
         setNewVisitor({
             ...newVisitor,
-            [name]:value
+            [name]: value
         })
     }
     return (
@@ -43,13 +53,21 @@ const FormVisitors = ({getVisitors,createVisitor,formData}) => {
                 </label>
                 <label>
                     <span>Card Number</span>
-                    <input onChange={handleInputChange} value={newVisitor.cardNumber}  name='cardNumber' id="cardNumber"></input>
+                    <input onChange={handleInputChange} value={newVisitor.cardNumber} name='cardNumber' id="cardNumber"></input>
                 </label>
                 <label>
                     <span>Date</span>
                     <input type="date" onChange={handleInputChange} value={newVisitor.createdDate} name='createdDate' id="createdDate"></input>
                 </label>
             </div>
+
+            <div id="myModal" style={{ display: `${showError}`, color: "red" }} class="modal">
+                <div class="modal-content">
+                    <span class="close"></span>
+                    <h3>Please fill all fields...</h3>
+                </div>
+            </div>
+
             <div>
                 <button onClick={handleSubmit} className="formButton" >{newVisitor.id ? "Update" : "Create"}</button>
             </div>
@@ -59,22 +77,22 @@ const FormVisitors = ({getVisitors,createVisitor,formData}) => {
 const mapStateToProps = (state) => {
     const { visitors: { visitorsData } } = state;
     return {
-      visitorsData,
+        visitorsData,
     }
-  }
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      createVisitor: (data) => {
-        dispatch(createVisitorThunk(data))
-      },
-      getVisitors:()=>{
-        dispatch(getVisitorsThunk())
-      }
+        createVisitor: (data) => {
+            dispatch(createVisitorThunk(data))
+        },
+        getVisitors: () => {
+            dispatch(getVisitorsThunk())
+        }
     }
-  }
-  
-  export default connect(
+}
+
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(memo(FormVisitors));
+)(memo(FormVisitors));
