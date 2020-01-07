@@ -2,7 +2,7 @@
   "name": "rooms",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://khoren66.github.io.booking",
+  "homepage": "https://khoren66.github.io/booking",
   "dependencies": {
     "axios": "^0.19.0",
     "axios-endpoints": "^0.2.3",
