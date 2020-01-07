@@ -1,0 +1,6 @@
+.visitors{
+    display: flex;
+    justify-content: center;
+    height: 644px;
+    min-width: 1280px;
+}

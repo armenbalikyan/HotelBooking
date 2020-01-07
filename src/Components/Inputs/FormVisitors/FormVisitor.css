@@ -1,0 +1,12 @@
+.formVisitor{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 614px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 20px rgba(183, 190, 199, 0.25);
+    align-items: center;
+    border-radius: 3px;
+    background-color: #fff;
+    justify-content: space-between;
+}
