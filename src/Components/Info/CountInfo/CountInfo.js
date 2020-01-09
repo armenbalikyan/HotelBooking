@@ -2,14 +2,15 @@ import React,{useEffect, memo} from 'react'
 import { getStatusThunk } from '../../../Thunks'
 import { connect } from 'react-redux';
 import './CountInfo.css'
-const CountInfo =({ getStatus, status })=>{
+import Spinner from '../../Spinner/Spinner';
+const CountInfo =({ getStatus, status,gettingStatus })=>{
       
   useEffect(() => {
      getStatus()
   }, []);
     return(
         <div className='allInfo'>
-        {status && Object.keys(status).map((e, i) =>
+        {!status ?"Something went wrong !!!": Object.keys(status).map((e, i) =>
           <div className="detail" key={i}>
             <span>{status[e]}</span>
             <span>{e}</span>

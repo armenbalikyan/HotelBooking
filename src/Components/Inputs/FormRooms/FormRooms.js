@@ -67,9 +67,9 @@ const FormRooms = ({ createRoom, getRooms, getStatus, formData }) => {
         </label>
       </div>
 
-      <div id="myModal" style={{display:`${showError}`,color:"red"}} class="modal">
-        <div class="modal-content">
-          <span class="close"></span>
+      <div id="myModal" style={{display:`${showError}`,color:"red"}} className="modal">
+        <div className="modal-content">
+          <span className="close"></span>
           <h3>Please fill all fields...</h3>
         </div>
       </div>

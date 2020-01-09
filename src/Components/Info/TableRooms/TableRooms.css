@@ -21,6 +21,7 @@ table {
   }
   .tableRooms{
     display: flex;
+    justify-content: center;
     min-width: 700px;
     height: 564px;
     background: #FFFFFF;

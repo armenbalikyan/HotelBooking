@@ -1,6 +1,6 @@
 const initialState = {
   gettingBookings: false,
-  bookings: []
+  bookingsData: []
 };
 
 export default function bookingsReducer(state = initialState, action) {

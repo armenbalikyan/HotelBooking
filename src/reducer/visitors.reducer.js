@@ -16,7 +16,7 @@ export default function visitorsReducer(state = initialState, action) {
                 gettingVisitors:false,
                 visitorsData:action.payload
             }
-            case "GET_ROOMS_FAILURE":    
+            case "GET_VISITORS_FAILURE":    
             return {
                 ...state,
                 gettingVisitors:false,

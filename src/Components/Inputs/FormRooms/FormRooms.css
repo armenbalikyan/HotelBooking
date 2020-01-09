@@ -45,3 +45,7 @@ button:hover{
 .asideRoom{
     margin: 25px;
 }
+
+.lds-roller{
+    margin-top: 30px;
+}

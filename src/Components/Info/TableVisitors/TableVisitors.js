@@ -4,6 +4,7 @@ import { getVisitorsThunk} from '../../../Thunks'
 import moment from 'moment'
 //import Spinner from '../../Spinner/Spinner';
 import './TableVisitors.styles.css'
+import Spinner from '../../Spinner/Spinner'
 
 const TableVisitors = (props) => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const TableVisitors = (props) => {
 
   return (
     <div className="tableRooms">
+      {props.gettingVisitors ? <Spinner/> : props.visitorsData.length==0? <h2>No Data</h2>:
       <table>
         <thead>
           <tr>
@@ -27,7 +29,7 @@ const TableVisitors = (props) => {
         </thead>
         <tbody>
           {
-            props.visitorsData && props.visitorsData.map((e, i) => {
+             props.visitorsData.map((e, i) => {
               return <tr key={e.id}>
                 <td>{++i}</td>
                 <td>{e.personName}</td>
@@ -40,7 +42,7 @@ const TableVisitors = (props) => {
             })}
 
         </tbody>
-      </table>
+      </table>}
     </div>
   )
 }

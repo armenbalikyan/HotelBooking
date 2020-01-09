@@ -4,6 +4,7 @@ import { getBookingsThunk} from '../../../Thunks'
 import moment from 'moment'
 //import Spinner from '../../Spinner/Spinner';
 import './TableBookings.styles.css'
+import Spinner from '../../Spinner/Spinner'
 
 const TableBookings = (props) => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const TableBookings = (props) => {
 
   return (
     <div className="tableRooms">
+      {props.gettingBookings ?<Spinner/> :props.bookingsData.length == 0 ? <h2>No Data</h2> :
       <table>
         <thead>
           <tr>
@@ -40,7 +42,7 @@ const TableBookings = (props) => {
             })}
 
         </tbody>
-      </table>
+      </table>}
     </div>
   )
 }
