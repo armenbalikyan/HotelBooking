@@ -28,7 +28,7 @@ export default function bookingsReducer(state = initialState, action) {
       case "CREATE_BOOKING_SUCCSESS":
         return {
             ...state,
-            booingsData: [...state.bookingsData,action.payload]
+            bookingsData: [...state.bookingsData,action.payload]
         }
         case "CREATE_BOOKING_FAILURE":    
         return {
