@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect } from 'react';
-import { getVisitorsThunk, createVisitorThunk } from '../../../Thunks'
+import {createVisitorThunk } from '../../../Thunks'
 import { connect } from 'react-redux';
 import './FormVisitor.css'
 
@@ -9,7 +9,7 @@ let person = {
     cardNumber: "",
     createdDate: "",
 }
-const FormVisitors = ({ getVisitors, createVisitor, formData }) => {
+const FormVisitors = ({createVisitor, formData }) => {
     const [newVisitor, setNewVisitor] = useState(person)
     const [showError, setShowError] = useState("none");
 
@@ -21,10 +21,9 @@ const FormVisitors = ({ getVisitors, createVisitor, formData }) => {
     }, [formData])
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         if (newVisitor.personName && newVisitor.personId && newVisitor.cardNumber && newVisitor.createdDate) {
-            createVisitor(newVisitor)
-            setTimeout(() => getVisitors(), 0)
+            await createVisitor(newVisitor)
             setNewVisitor(person)
             setShowError("none")
         } else {
@@ -85,9 +84,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createVisitor: (data) => {
             dispatch(createVisitorThunk(data))
-        },
-        getVisitors: () => {
-            dispatch(getVisitorsThunk())
         }
     }
 }

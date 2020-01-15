@@ -14,7 +14,7 @@ const TableBookings = (props) => {
 
   return (
     <div className="tableRooms">
-      {props.gettingBookings ?<Spinner/> :props.bookingsData.length == 0 ? <h2>No Data</h2> :
+      {props.gettingBookings ?<Spinner/> :props.bookingsData.length === 0 ? <h2>No Data</h2> :
       <table>
         <thead>
           <tr>

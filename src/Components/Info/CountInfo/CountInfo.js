@@ -2,11 +2,11 @@ import React,{useEffect, memo} from 'react'
 import { getStatusThunk } from '../../../Thunks'
 import { connect } from 'react-redux';
 import './CountInfo.css'
-import Spinner from '../../Spinner/Spinner';
 const CountInfo =({ getStatus, status,gettingStatus })=>{
       
   useEffect(() => {
-     getStatus()
+    const getData = async () => { await getStatus() }
+    getData() 
   }, []);
     return(
         <div className='allInfo'>

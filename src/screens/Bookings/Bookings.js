@@ -3,16 +3,15 @@ import FormBookings from '../../Components/Inputs/FormBookings/FormBookings'
 import './bookings.styles.css'
 import {connect} from 'react-redux'
 import TableBookings from '../../Components/Info/TableBookings/TableBookings'
-import {getBookingsThunk, removeBookingThunk} from '../../Thunks'
+import {removeBookingThunk} from '../../Thunks'
 
 
-const Bookings = ({removeBooking,getBookings}) => {
+const Bookings = ({removeBooking}) => {
     const [formData, setForm] = useState({})
 
 
     const handleRemoveBooking = (id) => {
         removeBooking(id)
-        getBookings()
     }
 
     const handleEditBooking = (data) => {
@@ -43,9 +42,6 @@ const mapDispatchToProps = (dispatch) => {
       removeBooking:(id)=>{
         dispatch(removeBookingThunk(id))
       },
-      getBookings: () => {
-        dispatch(getBookingsThunk())
-      }
     }
   }
   export default connect(

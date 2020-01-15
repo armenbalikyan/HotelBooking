@@ -43,10 +43,13 @@ export const getStatusThunk = () => async (dispatch) => {
           available: true,
           ...data
         }); 
-        dispatch(createRoomsSuccsess(response.data))
         if (response.statusText !== "OK") {
           throw new Error('Cannot create Room')
         }
+        dispatch(createRoomsSuccsess(response.data))
+        dispatch(getRoomsThunk())
+        dispatch(getStatusThunk())
+        
       }      
     } catch (error) {
       throw new Error(error)
@@ -58,6 +61,8 @@ export const getStatusThunk = () => async (dispatch) => {
     try {
       await api.deleteUpdateRoom(id).delete();
       dispatch(removeRoomSuccsess(id))     
+      dispatch(getRoomsThunk())
+      dispatch(getStatusThunk())
     } catch (error) {
       dispatch(removeRoomFailure());
     }

@@ -14,7 +14,7 @@ const TableVisitors = (props) => {
 
   return (
     <div className="tableRooms">
-      {props.gettingVisitors ? <Spinner/> : props.visitorsData.length==0? <h2>No Data</h2>:
+      {props.gettingVisitors ? <Spinner/> : props.visitorsData.length===0? <h2>No Data</h2>:
       <table>
         <thead>
           <tr>

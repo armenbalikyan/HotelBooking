@@ -2,14 +2,13 @@ import React,{useState} from 'react'
 import FormVisitors from '../../Components/Inputs/FormVisitors/FormVisitor'
 import './visitors.styles.css'
 import {connect} from 'react-redux'
-import {getVisitorsThunk,removeVisitorThunk} from '../../Thunks'
+import {removeVisitorThunk} from '../../Thunks'
 import TableVisitors from '../../Components/Info/TableVisitors/TableVisitors'
-const Visitors = ({removeVisitor,getVisitors})=>{
+const Visitors = ({removeVisitor})=>{
     const [formData,setForm]= useState({})
 
     const handleRemoveVisitor=(id)=>{
         removeVisitor(id)
-        getVisitors()
     }
 
     const handleEditVisitor=(data)=>{
@@ -41,9 +40,6 @@ const mapStateToProps = (state) => {
       removeVisitor:(id)=>{
         dispatch(removeVisitorThunk(id))
       },
-      getVisitors: () => {
-        dispatch(getVisitorsThunk())
-      }
     }
   }
   export default connect(

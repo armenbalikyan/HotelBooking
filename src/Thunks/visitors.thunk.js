@@ -27,6 +27,7 @@ export const createVisitorThunk = (data) => async (dispatch) => {
         ...data
       });
       dispatch(createVisitorSuccsess(response.data))
+      dispatch(getVisitorsThunk())
       if (response.statusText !== "OK") {
         throw new Error('Cannot create Visitor')
       }
@@ -40,6 +41,7 @@ export const removeVisitorThunk = (id) => async (dispatch) => {
   try {
     await api.deleteUpdateVisitor(id).delete();
     dispatch(removeVisitorSuccsess(id))
+    dispatch(getVisitorsThunk())
   } catch (error) {
     dispatch(removeVisitorFailure());
   }

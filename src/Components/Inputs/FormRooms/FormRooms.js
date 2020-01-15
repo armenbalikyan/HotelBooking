@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from 'react'
-import { getRoomsThunk, createRoomThunk, getStatusThunk } from '../../../Thunks'
+import {createRoomThunk} from '../../../Thunks'
 import { connect } from 'react-redux';
 import './FormRooms.css'
 
@@ -9,7 +9,7 @@ let form = {
   roomId: "",
   balcony: false
 }
-const FormRooms = ({ createRoom, getRooms, getStatus, formData }) => {
+const FormRooms = ({ createRoom,formData }) => {
   const [newRoom, setNewRoom] = useState(form)
   const [showError, setShowError] = useState("none");
 
@@ -29,13 +29,9 @@ const FormRooms = ({ createRoom, getRooms, getStatus, formData }) => {
     })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (newRoom.beds && newRoom.floor && newRoom.roomId) {
-      createRoom(newRoom)
-      setTimeout(() => {
-        getRooms()
-        getStatus()
-      }, 0);
+      await createRoom(newRoom)
       setNewRoom({ ...form })
       setShowError("none")
     }else{
@@ -91,14 +87,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createRoom: (data) => {
       dispatch(createRoomThunk(data))
-    },
-    getRooms: () => {
-      dispatch(getRoomsThunk())
-    },
-    getStatus: () => {
-      dispatch(getStatusThunk())
     }
-
   }
 }
 

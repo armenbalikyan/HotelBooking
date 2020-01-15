@@ -22,14 +22,16 @@ export const createBookingThunk = (data) => async (dispatch) => {
         throw new Error('Cannot update Booking')
       }
       dispatch(editBookingSuccsess(response.data))
+      dispatch(getBookingsThunk());
     } else {
       const response = await api.bookings.post({
         ...data
       });
-      dispatch(createBookingSuccsess(response.data))
       if (response.statusText !== "OK") {
         throw new Error('Cannot create Visitor')
       }
+      dispatch(createBookingSuccsess(response.data))
+      
     }
   } catch (error) {
     throw new Error(error)
@@ -40,6 +42,7 @@ export const removeBookingThunk = (id) => async (dispatch) => {
   try {
     await api.deleteUpdateBooking(id).delete();
     dispatch(removeBookingSuccsess(id))
+    dispatch(getBookingsThunk());
   } catch (error) {
     dispatch(removeBookingFailure());
   }

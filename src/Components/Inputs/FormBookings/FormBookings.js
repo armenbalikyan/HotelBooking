@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect } from 'react';
-import { getBookingsThunk, createBookingThunk, getVisitorsThunk, getRoomsThunk } from '../../../Thunks'
+import {createBookingThunk, getVisitorsThunk, getRoomsThunk } from '../../../Thunks'
 import { connect } from 'react-redux';
 import './FormBookings.css'
 
@@ -10,7 +10,7 @@ let booking = {
     roomNumber: "",
     bookedAt: "",
 }
-const FormBookings = ({ getBookings, createBooking, formData, getVisitors, getRooms, visitorsData, roomsData }) => {
+const FormBookings = ({createBooking, formData, getVisitors, getRooms, visitorsData, roomsData }) => {
     const [newBooking, setNewBooking] = useState(booking)
     const [showError,setShowError] = useState("none")
     useEffect(() => {
@@ -26,10 +26,9 @@ const FormBookings = ({ getBookings, createBooking, formData, getVisitors, getRo
         })
     }, [formData])
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         if(newBooking.personName && newBooking.roomId && newBooking.bookedAt){
-            createBooking(newBooking)
-            setTimeout(() => getBookings(), 0)
+            await createBooking(newBooking)
             setNewBooking(booking)
             setShowError("none")
         }else{
@@ -94,9 +93,9 @@ const FormBookings = ({ getBookings, createBooking, formData, getVisitors, getRo
                 </label>
             </div>
 
-            <div id="myModal" style={{ display: `${showError}`, color: "red" }} class="modal">
-                <div class="modal-content">
-                    <span class="close"></span>
+            <div id="myModal" style={{ display: `${showError}`, color: "red" }} className="modal">
+                <div className="modal-content">
+                    <span className="close"></span>
                     <h3>Please fill all fields...</h3>
                 </div>
             </div>
@@ -122,9 +121,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createBooking: (data) => {
             dispatch(createBookingThunk(data))
-        },
-        getBookings: () => {
-            dispatch(getBookingsThunk())
         },
         getVisitors: () => {
             dispatch(getVisitorsThunk())

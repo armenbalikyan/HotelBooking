@@ -12,7 +12,7 @@ const TableRooms = (props) => {
 
   return (
     <div className="tableRooms">
-      {props.gettingRooms ? <Spinner /> : props.roomsData.length == 0 ? <h2>No Data</h2> :
+      {props.gettingRooms ? <Spinner /> : props.roomsData.length === 0 ? <h2>No Data</h2> :
         <table>
           <thead>
             <tr>

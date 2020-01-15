@@ -12,9 +12,7 @@ const [formData,setForm]= useState({})
 
 
 const handleRemoveRoom=(id)=>{
-  removeRoom(id)
-  getRooms()
-  getStatus()
+   removeRoom(id)
 }
 
 const handleEditRoom=(data)=>{
